@@ -12,6 +12,7 @@ struct details s[100];
 void signup();
 void account_check();
 int validate();
+void login();
 int flag=1,i,j=0,count=0,caps=0,small=0,special=0,numbers=0,success=0,x,choice;
 char temp_name[100],temp_password1[100],temp_password2[100],temp_email[100],temp_mobile[100];
 int temp_age;
@@ -28,11 +29,11 @@ int main()
 				signup();
 				break;
 			}
-			/*case 2:
+			case 2:
 			{
 				login();
 				break;
-			}*/
+			}
 			case 3:
 			{
 				exit(1);
@@ -64,6 +65,36 @@ void signup()
 	if(x==1)
 		account_check();
 
+}
+void login()
+{
+	printf("Enter Your Email\t");
+	scanf("%s",temp_email);
+	printf("Enter Your Password\t");
+	scanf("%s",temp_password1);
+	for(i=0;i<100;i++)
+	{
+		if(!strcmp(s[i].email,temp_email))
+		{
+			if(!strcmp(s[i].password,temp_password1))
+			{
+				printf("\n\nWelcome %s, Your are successfully logged in\n\n",s[i].uname);
+				break;
+			}
+			else
+			{
+				printf("\n\nInvalid Password! Please Enter the correct password\n\n");
+				main();
+				break;
+			}
+		}
+		else
+		{
+			printf("\n\nAccount doesn't exist, Please signup!!\n\n");
+			main();
+			break;
+		}	
+	}
 }
 void account_check()
 {
