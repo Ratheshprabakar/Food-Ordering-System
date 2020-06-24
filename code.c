@@ -8,14 +8,29 @@ struct details
 	char email[100];
 	char mobile[10];
 };
+struct hotels
+{
+	char hotel[100];
+	char first_food[20];
+	char second_food[20];
+	char third_food[20];
+	char fourth_food[25];
+	int first,second,third,fourth;
+};
+struct hotels m[5];
 struct details s[100];
 void signup();
 void account_check();
 int validate();
 void login();
+void cart();
+void search_by_hotels();
+void hotel_initialize();
+int hotels(int hotel_choice);
 int flag=1,i,j=0,count=0,caps=0,small=0,special=0,numbers=0,success=0,x,choice;
 char temp_name[100],temp_password1[100],temp_password2[100],temp_email[100],temp_mobile[100];
-int temp_age;
+int temp_age,total=0,food_choice,n,hotel_choice,search_choice;
+int ch;
 int main()
 {
 	while(1)
@@ -66,6 +81,111 @@ void signup()
 		account_check();
 
 }
+void cart()
+{
+	printf("\n\n\n\n--------------Cart----------------");
+	printf("\nYour Total Order Amount is %d\n",total);
+	printf("\n\nDo You wish to order (y=1/n=0):");
+	scanf("%d",&ch);
+	if(ch==1)
+	{
+		printf("\n\nThank You for your order!! Your Food is on the way. Welcome again!!\n\n");
+		exit(1);
+	}
+	else if(ch==0)
+	{
+		printf("\n\nOops! Your order is cancelled!! Thank You visit again!\n");
+		exit(1);
+	}
+	else
+	{
+		printf("\n\nPlease Enter the correct choice\n\n");
+		cart();
+	}
+}
+int hotels(int hotel_choice)
+{
+	total=0;
+	while(1)
+		{
+			printf("\n\nList of foods available in %s\n\n1) %s\tRs: %d\n2) %s\tRs: %d\n3) %s\tRs: %d\n4) Cart\n5) Exit\n\nPlease Enter Your Choice\t",m[hotel_choice].hotel,m[hotel_choice].first_food,m[hotel_choice].first,m[hotel_choice].second_food,m[hotel_choice].second,m[hotel_choice].third_food,m[hotel_choice].third);
+			scanf("%d",&food_choice);
+			if(food_choice==1)
+			{			
+				printf("Please Enter the Count of %s\t",m[hotel_choice].first_food);
+				scanf("%d",&n);
+				total=total+(n*m[hotel_choice].first);
+			}
+			else if(food_choice==2)
+			{			
+				printf("Please Enter the Count of %s\t",m[hotel_choice].second_food);
+				scanf("%d",&n);
+				total=total+(n*m[hotel_choice].second);
+			}
+			else if(food_choice==3)
+			{
+				printf("Please Enter the Count of %s\t",m[hotel_choice].third_food);
+				scanf("%d",&n);
+				total=total+(n*m[hotel_choice].third);
+			}
+			else if(food_choice==4)
+			{
+				cart();
+			}
+			else if(food_choice==5)
+			{
+				search_by_hotels();	
+			}
+			else
+			{
+				printf("Please Enter the valid Choice\n\n");
+			}
+
+			
+		}
+	
+}
+void hotel_initialize()
+{
+	strcpy(m[1].hotel,"Aarya_Bhavan");
+	strcpy(m[1].first_food,"Sandwich");
+	strcpy(m[1].second_food,"Pizza");
+	strcpy(m[1].third_food,"Fried_Rice");
+	m[1].first=70;
+	m[1].second=100;
+	m[1].third=95;
+
+	strcpy(m[2].hotel,"Banu_Hotel");
+	strcpy(m[2].first_food,"Parotta");
+	strcpy(m[2].second_food,"Noodles");
+	strcpy(m[2].third_food,"Chicken_Rice");
+	m[2].first=15;
+	m[2].second=75;
+	m[2].third=80;
+
+	strcpy(m[3].hotel,"SR_Bhavan");
+	strcpy(m[3].first_food,"Chicken_Biriyani");
+	strcpy(m[3].second_food,"Prawn");
+	strcpy(m[3].third_food,"Faloda");
+	m[3].first=90;
+	m[3].second=120;
+	m[3].third=35;
+}
+void search_by_hotels()
+{
+	hotel_initialize();
+	printf("\n\nPlease Choose the hotels\n\n1) Aarya Bavan\n2) Banu Hotel\n3) Hotel RS\n4) Exit\n\nPlease select the hotel\t");
+	scanf("%d",&hotel_choice);
+	if(hotel_choice>4)
+	{
+		printf("Please Enter the valid choice\n\n");
+		search_by_hotels();
+	}
+	else if(hotel_choice==4)
+		exit(1);
+	else
+		hotels(hotel_choice);
+}
 void login()
 {
 	printf("Enter Your Email\t");
@@ -78,7 +198,30 @@ void login()
 		{
 			if(!strcmp(s[i].password,temp_password1))
 			{
-				printf("\n\nWelcome %s, Your are successfully logged in\n\n",s[i].uname);
+				printf("\n\nWelcome %s, Your are successfully logged in\n\nWe Provide two ways of search\n1) Search By Hotels\n2) Search by Food\n3) Exit\n\nPlease Enter your choice\t",s[i].uname);
+				scanf("%d",&search_choice);
+				switch(search_choice)
+				{
+					case 1: 
+					{
+						search_by_hotels();
+						break;
+					}
+					/*case 2:
+					{
+						search_by_food();
+						break;	
+					}*/
+					case 3:
+					{
+						exit(1);
+					}
+					default:
+					{
+						printf("Please Enter the valid choice\n\n");
+						break;
+					}
+				}
 				break;
 			}
 			else
