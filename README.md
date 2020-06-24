@@ -5,6 +5,9 @@ Functions :
 
 * Sign up
 * Login
+* Order_by_hotel
+* Order_by_food
+* Cart/Order Confirmation
 
 Signup :
 * Get the Username, Age, Email, Password, Confirm Password, Mobile Number
@@ -17,6 +20,14 @@ Signup :
  
  Login :
  * Email and Password are checked.
+ 
+ Order_by_hotel
+ * Select the hotel
+   * Once the hotel is selected, it will displayed the list of available foods with their cost.
+   * Select the food and enter the no of items to order.
+ * Once you selected all the foods, Select Cart.
+ 
+ 
 
 
 
