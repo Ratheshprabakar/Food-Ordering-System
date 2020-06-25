@@ -27,6 +27,10 @@ A mini project on C to implement Food ordering with login, signup, search by foo
    * Select the food and enter the no of items to order.
  * Once you selected all the foods, Select Cart.
  
+ **Order_by_Food :**
+ * Select the food and enter the no of items to order.
+ * Once you selected all the foods, Select Cart.
+ 
  **Cart :**
  * Display the total cost of your orders.
  * Confirm your order and enjoy your food :hamburger:.
