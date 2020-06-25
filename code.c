@@ -31,7 +31,7 @@ void hotel_initialize();
 void hotels(int hotel_choice);
 int flag=1,i,j=0,count=0,caps=0,small=0,special=0,numbers=0,success=0,x,choice;
 char temp_name[100],temp_password1[100],temp_password2[100],temp_email[100],temp_mobile[100];
-int temp_age,total=0,food_choice,n,hotel_choice,search_choice;
+int temp_age,total=0,food_choice,n,hotel_choice,search_choice,confirm;
 int ch,food,hotel_id;
 int main()
 {
@@ -85,7 +85,8 @@ void signup()
 }
 void login()
 {
-	printf("Enter Your Email\t");
+	printf("\n\nLOGIN\n\n")
+	printf("\nEnter Your Email\t");
 	scanf("%s",temp_email);
 	printf("Enter Your Password\t");
 	scanf("%s",temp_password1);
@@ -259,8 +260,18 @@ void cart()
 	}
 	else if(ch==0)
 	{
-		printf("\n\nOops! Your order is cancelled!! Thank You visit again!\n");
-		exit(1);
+		printf("Do You want to exit -1 or Go back -0");
+		scanf("%d",&confirm);
+		if(confirm==1)
+		{
+			printf("\n\nOops! Your order is cancelled!! Exiting..Thank You visit again!\n");
+			exit(1);
+		}
+		else
+		{
+			printf("\n\nThank You\n\n");
+			login();
+		}
 	}
 	else
 	{
