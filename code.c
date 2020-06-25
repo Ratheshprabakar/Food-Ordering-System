@@ -25,12 +25,14 @@ int validate();
 void login();
 void cart();
 void search_by_hotels();
+void search_by_food();
+void food_order(int food);
 void hotel_initialize();
-int hotels(int hotel_choice);
+void hotels(int hotel_choice);
 int flag=1,i,j=0,count=0,caps=0,small=0,special=0,numbers=0,success=0,x,choice;
 char temp_name[100],temp_password1[100],temp_password2[100],temp_email[100],temp_mobile[100];
 int temp_age,total=0,food_choice,n,hotel_choice,search_choice;
-int ch;
+int ch,food,hotel_id;
 int main()
 {
 	while(1)
@@ -81,29 +83,128 @@ void signup()
 		account_check();
 
 }
-void cart()
+void login()
 {
-	printf("\n\n\n\n--------------Cart----------------");
-	printf("\nYour Total Order Amount is %d\n",total);
-	printf("\n\nDo You wish to order (y=1/n=0):");
-	scanf("%d",&ch);
-	if(ch==1)
+	printf("Enter Your Email\t");
+	scanf("%s",temp_email);
+	printf("Enter Your Password\t");
+	scanf("%s",temp_password1);
+	for(i=0;i<100;i++)
 	{
-		printf("\n\nThank You for your order!! Your Food is on the way. Welcome again!!\n\n");
-		exit(1);
-	}
-	else if(ch==0)
-	{
-		printf("\n\nOops! Your order is cancelled!! Thank You visit again!\n");
-		exit(1);
-	}
-	else
-	{
-		printf("\n\nPlease Enter the correct choice\n\n");
-		cart();
+		if(!strcmp(s[i].email,temp_email))
+		{
+			if(!strcmp(s[i].password,temp_password1))
+			{
+				printf("\n\nWelcome %s, Your are successfully logged in\n\nWe Provide two ways of search\n1) Search By Hotels\n2) Search by Food\n3) Exit\n\nPlease Enter your choice\t",s[i].uname);
+				scanf("%d",&search_choice);
+				switch(search_choice)
+				{
+					case 1: 
+					{
+						search_by_hotels();
+						break;
+					}
+					case 2:
+					{
+						search_by_food();
+						break;	
+					}
+					case 3:
+					{
+						exit(1);
+					}
+					default:
+					{
+						printf("Please Enter the valid choice\n\n");
+						break;
+					}
+				}
+				break;
+			}
+			else
+			{
+				printf("\n\nInvalid Password! Please Enter the correct password\n\n");
+				main();
+				break;
+			}
+		}
+		else
+		{
+			printf("\n\nAccount doesn't exist, Please signup!!\n\n");
+			main();
+			break;
+		}	
 	}
 }
-int hotels(int hotel_choice)
+
+void search_by_hotels()
+{
+	hotel_initialize();
+	printf("\n\nPlease Choose the hotels\n\n1) %s\n2) %s\n3) %s\n4) Exit\n\nPlease select the hotel\t",m[1].hotel,m[2].hotel,m[3].hotel);
+	scanf("%d",&hotel_choice);
+	if(hotel_choice>4)
+	{
+		printf("Please Enter the valid choice\n\n");
+		search_by_hotels();
+	}
+	else if(hotel_choice==4)
+		exit(1);
+	else
+		hotels(hotel_choice);
+}
+void search_by_food()
+{
+	total=0;
+	hotel_initialize();
+	while(1)
+	{
+		printf("\n\nPlease choose the food\n\n1) %s\t%d\n2) %s\t%d\n3) %s\t%d\n4) %s\t%d\n5) %s\t%d\n6) %s\t%d\n7) %s\t%d\n8) %s\t%d\n9) %s\t%d\n10) Cart\n11) Exit",m[1].first_food,m[1].first,m[1].second_food,m[1].second,m[1].third_food,m[1].third,m[2].first_food,m[2].first,m[2].second_food,m[2].second,m[2].third_food,m[2].third,m[3].first_food,m[3].first,m[3].second_food,m[3].second,m[3].third_food,m[3].third);
+		printf("\nPlease Enter Your Choice\t");
+		scanf("%d",&food);
+		if(food>10)
+		{
+			printf("Please Enter the valid choice\n\n");
+			search_by_food();
+		}
+		else if(food==10)
+			cart();
+		else if(food==11)
+			exit(1);
+		else 
+			food_order(food);
+	}
+		
+}
+void food_order(int food)
+{
+	if(food>=1 && food<=3)
+		hotel_id=1;
+	else if(food>=4 && food<=6)
+		hotel_id=2;
+	else
+		hotel_id=3;
+	if((food%3)==1)
+	{			
+		printf("Please Enter the Count of %s\t",m[hotel_id].first_food);
+		scanf("%d",&n);
+		total=total+(n*m[hotel_id].first);
+	}
+	else if((food%3)==2)
+	{			
+		printf("Please Enter the Count of %s\t",m[hotel_id].second_food);
+		scanf("%d",&n);
+		total=total+(n*m[hotel_id].second);
+	}
+	else if((food%3)==0)
+	{
+		printf("Please Enter the Count of %s\t",m[hotel_id].third_food);
+		scanf("%d",&n);
+		total=total+(n*m[hotel_id].third);
+	}
+
+	
+}
+void hotels(int hotel_choice)
 {
 	total=0;
 	while(1)
@@ -145,100 +246,29 @@ int hotels(int hotel_choice)
 		}
 	
 }
-void hotel_initialize()
+void cart()
 {
-	strcpy(m[1].hotel,"Aarya_Bhavan");
-	strcpy(m[1].first_food,"Sandwich");
-	strcpy(m[1].second_food,"Pizza");
-	strcpy(m[1].third_food,"Fried_Rice");
-	m[1].first=70;
-	m[1].second=100;
-	m[1].third=95;
-
-	strcpy(m[2].hotel,"Banu_Hotel");
-	strcpy(m[2].first_food,"Parotta");
-	strcpy(m[2].second_food,"Noodles");
-	strcpy(m[2].third_food,"Chicken_Rice");
-	m[2].first=15;
-	m[2].second=75;
-	m[2].third=80;
-
-	strcpy(m[3].hotel,"SR_Bhavan");
-	strcpy(m[3].first_food,"Chicken_Biriyani");
-	strcpy(m[3].second_food,"Prawn");
-	strcpy(m[3].third_food,"Faloda");
-	m[3].first=90;
-	m[3].second=120;
-	m[3].third=35;
-}
-void search_by_hotels()
-{
-	hotel_initialize();
-	printf("\n\nPlease Choose the hotels\n\n1) Aarya Bavan\n2) Banu Hotel\n3) Hotel RS\n4) Exit\n\nPlease select the hotel\t");
-	scanf("%d",&hotel_choice);
-	if(hotel_choice>4)
+	printf("\n\n\n\n--------------Cart----------------");
+	printf("\nYour Total Order Amount is %d\n",total);
+	printf("\n\nDo You wish to order (y=1/n=0):");
+	scanf("%d",&ch);
+	if(ch==1)
 	{
-		printf("Please Enter the valid choice\n\n");
-		search_by_hotels();
-	}
-	else if(hotel_choice==4)
+		printf("\n\nThank You for your order!! Your Food is on the way. Welcome again!!\n\n");
 		exit(1);
-	else
-		hotels(hotel_choice);
-}
-void login()
-{
-	printf("Enter Your Email\t");
-	scanf("%s",temp_email);
-	printf("Enter Your Password\t");
-	scanf("%s",temp_password1);
-	for(i=0;i<100;i++)
+	}
+	else if(ch==0)
 	{
-		if(!strcmp(s[i].email,temp_email))
-		{
-			if(!strcmp(s[i].password,temp_password1))
-			{
-				printf("\n\nWelcome %s, Your are successfully logged in\n\nWe Provide two ways of search\n1) Search By Hotels\n2) Search by Food\n3) Exit\n\nPlease Enter your choice\t",s[i].uname);
-				scanf("%d",&search_choice);
-				switch(search_choice)
-				{
-					case 1: 
-					{
-						search_by_hotels();
-						break;
-					}
-					/*case 2:
-					{
-						search_by_food();
-						break;	
-					}*/
-					case 3:
-					{
-						exit(1);
-					}
-					default:
-					{
-						printf("Please Enter the valid choice\n\n");
-						break;
-					}
-				}
-				break;
-			}
-			else
-			{
-				printf("\n\nInvalid Password! Please Enter the correct password\n\n");
-				main();
-				break;
-			}
-		}
-		else
-		{
-			printf("\n\nAccount doesn't exist, Please signup!!\n\n");
-			main();
-			break;
-		}	
+		printf("\n\nOops! Your order is cancelled!! Thank You visit again!\n");
+		exit(1);
+	}
+	else
+	{
+		printf("\n\nPlease Enter the correct choice\n\n");
+		cart();
 	}
 }
+
 void account_check()
 {
 	for(i=0;i<100;i++)
@@ -359,5 +389,31 @@ int validate()
 			return 0;
 		}
 	}
+}
+void hotel_initialize()
+{
+	strcpy(m[1].hotel,"Aarya_Bhavan");
+	strcpy(m[1].first_food,"Sandwich");
+	strcpy(m[1].second_food,"Pizza");
+	strcpy(m[1].third_food,"Fried_Rice");
+	m[1].first=70;
+	m[1].second=100;
+	m[1].third=95;
+
+	strcpy(m[2].hotel,"Banu_Hotel");
+	strcpy(m[2].first_food,"Parotta");
+	strcpy(m[2].second_food,"Noodles");
+	strcpy(m[2].third_food,"Chicken_Rice");
+	m[2].first=15;
+	m[2].second=75;
+	m[2].third=80;
+
+	strcpy(m[3].hotel,"SR_Bhavan");
+	strcpy(m[3].first_food,"Chicken_Biriyani");
+	strcpy(m[3].second_food,"Prawn");
+	strcpy(m[3].third_food,"Faloda");
+	m[3].first=90;
+	m[3].second=120;
+	m[3].third=35;
 }
 
