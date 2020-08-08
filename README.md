@@ -10,7 +10,7 @@ A mini project on C to implement Food ordering with login, signup, search by foo
 * Cart/Order Confirmation
 
 **Signup :**
-* Get the Username, Age, Email, Password, Confirm Password, Mobile Number
+* Get the username, age, email, password, confirm password and mobile number
 * Validate the inputs
   * Username must be alphabets.
   * Age must be greater than and npt equal to 0.
